@@ -80,8 +80,13 @@ extension Log {
         addEntry(msg, level: .Error, filter: filter, file:file, function:function, line:line)
     }
     
+    ///
+    public func network(request: String, response: String, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
+        addEntry(request, msg2: response, level: .Error, filter: filter, file:file, function:function, line:line)
+    }
     
-    private func addEntry(msg: String, level:LogLevel, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
+    
+    private func addEntry(msg: String, msg2: String? = nil, level:LogLevel, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
         
         if let filter = filter where self.excludedFilters.contains(filter) {
             return
@@ -94,9 +99,9 @@ extension Log {
         if self.echoToConsole {
             let string = String(
                 "\n" +
-                    "File: \(file)\n" +
-                    "Function: \(function), Line: \(line)\n" +
-                    msg + "\n" +
+                "File: \(file)\n" +
+                "Function: \(function), Line: \(line)\n" +
+                 msg + "\n" +
                 "\n"
             )
             
@@ -113,6 +118,7 @@ extension Log {
                 entry.filter = filter
                 entry.timestamp = NSDate()
                 entry.message = msg
+                entry.message2 = msg2
                 entry.file = file
                 entry.line = line
                 entry.function = function

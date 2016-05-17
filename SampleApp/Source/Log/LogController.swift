@@ -290,7 +290,6 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
         guard let resultsController = resultsController else {
             return
         }
-
         
         let entryOptional = resultsController.sections![indexPath.section].objects![indexPath.row] as? LogEntry
         guard let entry = entryOptional else {
@@ -328,6 +327,8 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
         
         cell.delegate = self
         cell.dateText = timeFormatter.stringFromDate(entry.timestamp)
+        cell.messageOneText = entry.message
+        cell.messageTwoText = entry.message2
         cell.functionText = entry.function
     }
     
@@ -359,6 +360,8 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
         Cell.instance.delegate = self
         Cell.instance.dateText = timeFormatter.stringFromDate(entry.timestamp)
         Cell.instance.functionText = entry.function
+        Cell.instance.messageOneText = entry.message
+        Cell.instance.messageTwoText = entry.message2
         
         return Cell.instance.calculateHeight(firstMessageIsOpen, messageTwoIsOpen: secondMessageIsOpen)
     }

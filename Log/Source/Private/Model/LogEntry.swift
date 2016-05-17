@@ -18,6 +18,7 @@ public class LogEntry: NSManagedObject {
     @NSManaged public var function: String
     @NSManaged public var line: Int32
     @NSManaged public var message: String
+    @NSManaged public var message2: String?
     @NSManaged public var timestamp: NSDate
     @NSManaged public var filter: String?
 

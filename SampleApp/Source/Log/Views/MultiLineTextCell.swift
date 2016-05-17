@@ -46,13 +46,13 @@ internal class MultiLineTextCell: UITableViewCell {
     
     var messageOneText: String? {
         didSet {
-            
+            messageOneTextView.text = messageOneText
         }
     }
     
     var messageTwoText: String? {
         didSet {
-            
+            messageTwoTextView.text = messageTwoText
         }
     }
     

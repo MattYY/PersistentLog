@@ -48,12 +48,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  
         var counter = 0
         let queue1 = dispatch_queue_create("AppTestQueue", nil)
-        let queue2 = dispatch_queue_create("AppTestQueue", nil)
+        //let queue2 = dispatch_queue_create("AppTestQueue", nil)
         dispatch_async(queue1) {
             while true {
                 sleep(3)
                 counter += 1
-                log.warn("Ate a bannana. Fruit count: \(counter)", filter: LogFilter.Bannana.rawValue)
+                
+                log.network("endpoint: http://test.com, data: { id: 876GSADF }", response: "{ token: q03987qwe0q98we7asdfpoi }")
             }
         }
         
