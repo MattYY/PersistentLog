@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 4.3">
+    <entity name="LogEntry" representedClassName="Log.LogEntry" syncable="YES">
+        <attribute name="file" attributeType="String" syncable="YES"/>
+        <attribute name="filter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="function" attributeType="String" syncable="YES"/>
+        <attribute name="levelRaw" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="line" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="message" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" attributeType="Date" indexed="YES" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="LogEntry" positionX="-63" positionY="-18" width="128" height="150"/>
+    </elements>
+</model>
