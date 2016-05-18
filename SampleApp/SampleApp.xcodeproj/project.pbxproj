@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F40B68C11CEC9FE500F334DA /* MockDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B68C01CEC9FE500F334DA /* MockDataGenerator.swift */; };
+		F40B68C51CECD16F00F334DA /* NSData+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B68C41CECD16F00F334DA /* NSData+String.swift */; };
+		F40B68C71CECF1F500F334DA /* NSURLRequest+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B68C61CECF1F500F334DA /* NSURLRequest+Debug.swift */; };
+		F40B68C91CECF20A00F334DA /* NSHTTPURLResponse+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B68C81CECF20A00F334DA /* NSHTTPURLResponse+Debug.swift */; };
 		F47E4D871CEA28AE00A8D6A0 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D841CEA28AE00A8D6A0 /* LogController.swift */; };
 		F47E4D8D1CEA28B900A8D6A0 /* LogFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D8B1CEA28B900A8D6A0 /* LogFilter.swift */; };
 		F47E4D8E1CEA28B900A8D6A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D8C1CEA28B900A8D6A0 /* AppDelegate.swift */; };
@@ -32,6 +36,10 @@
 
 /* Begin PBXFileReference section */
 		0EE173751AFCFC990021F3A8 /* Log Sample App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Log Sample App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F40B68C01CEC9FE500F334DA /* MockDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataGenerator.swift; sourceTree = "<group>"; };
+		F40B68C41CECD16F00F334DA /* NSData+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+String.swift"; sourceTree = "<group>"; };
+		F40B68C61CECF1F500F334DA /* NSURLRequest+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLRequest+Debug.swift"; sourceTree = "<group>"; };
+		F40B68C81CECF20A00F334DA /* NSHTTPURLResponse+Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSHTTPURLResponse+Debug.swift"; sourceTree = "<group>"; };
 		F47E4D841CEA28AE00A8D6A0 /* LogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
 		F47E4D8B1CEA28B900A8D6A0 /* LogFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFilter.swift; sourceTree = "<group>"; };
 		F47E4D8C1CEA28B900A8D6A0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +104,10 @@
 				F47E4D8B1CEA28B900A8D6A0 /* LogFilter.swift */,
 				F47E4D8C1CEA28B900A8D6A0 /* AppDelegate.swift */,
 				F47E4D921CEA2A2B00A8D6A0 /* Global.swift */,
+				F40B68C01CEC9FE500F334DA /* MockDataGenerator.swift */,
+				F40B68C41CECD16F00F334DA /* NSData+String.swift */,
+				F40B68C61CECF1F500F334DA /* NSURLRequest+Debug.swift */,
+				F40B68C81CECF20A00F334DA /* NSHTTPURLResponse+Debug.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -191,6 +203,10 @@
 				F47E4D8D1CEA28B900A8D6A0 /* LogFilter.swift in Sources */,
 				F47E4D9A1CEB629D00A8D6A0 /* MultiLineTextCell.swift in Sources */,
 				F47E4D931CEA2A2B00A8D6A0 /* Global.swift in Sources */,
+				F40B68C71CECF1F500F334DA /* NSURLRequest+Debug.swift in Sources */,
+				F40B68C51CECD16F00F334DA /* NSData+String.swift in Sources */,
+				F40B68C91CECF20A00F334DA /* NSHTTPURLResponse+Debug.swift in Sources */,
+				F40B68C11CEC9FE500F334DA /* MockDataGenerator.swift in Sources */,
 				F47E4D8E1CEA28B900A8D6A0 /* AppDelegate.swift in Sources */,
 				F47E4D9C1CEB7C2C00A8D6A0 /* UILabel+Size.swift in Sources */,
 			);

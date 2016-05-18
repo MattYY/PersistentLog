@@ -81,7 +81,7 @@ extension Log {
     }
     
     ///
-    public func network(request: String, response: String, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
+    public func network(request request: String, response: String, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
         addEntry(request, msg2: response, level: .Error, filter: filter, file:file, function:function, line:line)
     }
     
@@ -97,12 +97,18 @@ extension Log {
         }
         
         if self.echoToConsole {
+            let m2: String = msg2 != nil ? "\(msg2!)\n" : ""
+            
             let string = String(
-                "\n" +
+                "+\n" +
                 "File: \(file)\n" +
                 "Function: \(function), Line: \(line)\n" +
+                "--------------------------------------\n" +
                  msg + "\n" +
-                "\n"
+                "--------------------------------------\n" +
+                 m2 +
+                "--------------------------------------" +
+                "\n+"
             )
             
             print(string)

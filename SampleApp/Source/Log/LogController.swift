@@ -12,6 +12,8 @@ import Log
 
 
 class LogController: UIViewController {
+    
+    let log = Log.sharedInstance
 
     private let filters: [String]
     private let tableView: UITableView = UITableView()
@@ -44,8 +46,7 @@ class LogController: UIViewController {
         didSet {
             updateResults()
         }
-    }
-    
+    }    
     
     //MARK: - View Controller Lifecycle
     required init(filters: [String] = []) {

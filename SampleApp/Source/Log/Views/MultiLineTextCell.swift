@@ -61,6 +61,7 @@ internal class MultiLineTextCell: UITableViewCell {
             self.setNeedsLayout()
         }
     }
+    
     var expandMessageTwo = false {
         didSet {
             self.setNeedsLayout()
@@ -150,68 +151,7 @@ internal class MultiLineTextCell: UITableViewCell {
         layout()
         bindEvents()
     }
-    
-    /*
-    private let buffer = NSMutableAttributedString()
-    
-    var color:UIColor {
-        get { return self.label.textColor }
-        set { self.label.textColor = newValue }
-    }
-    
-    private let label: UILabel = {
-        let view = UILabel()
-        view.numberOfLines = 0
-        view.lineBreakMode = .ByWordWrapping
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    
-    required internal init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        layout()
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        layout()
-    }
-    
-    internal func clear() {
-        buffer.setAttributedString(NSAttributedString(string:""))
-        label.attributedText = buffer
-    }
-    
-    internal func append(str:String, font:UIFont) {
-        let trimmed = str.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        let astr = NSAttributedString(
-            string: trimmed,
-            attributes: [NSFontAttributeName : font]
-        )
-        
-        buffer.appendAttributedString(astr)
-        buffer.appendAttributedString(NSAttributedString(string:"\n"))
-        label.attributedText = buffer
-    }
-    
-    internal func append(str:String, style:String) {
-        append(str, font: UIFont.preferredFontForTextStyle(style))
-    }
-    
-    internal func layout() {
-        
-        selectionStyle = .Gray
-        contentView.addSubview(label)
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-10-[view]|", options:NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view":label]))
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-15-[view]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view":label]))
 
-        
-    }
-    */
-    
     override func layoutSubviews() {
         super.layoutSubviews()
 
