@@ -13,8 +13,6 @@ import Log
 
 class LogController: UIViewController {
     
-    let log = Log.sharedInstance
-
     private let filters: [String]
     private let tableView: UITableView = UITableView()
     
@@ -82,23 +80,15 @@ class LogController: UIViewController {
             scrollToBottom(false, onlyIfAtBottom:false)
         }
     }
-}
-
-
-
-
-
-//MARK: - Data -
-extension LogController {
+    
     private func setupFetchedResultsController() {
-        let context = log.mainContext
-        let request = NSFetchRequest(entityName: Log.LogEntryEntityName)
+        let request = log.fetchRequestForLogEntry()
         request.fetchBatchSize = 20
-        request.sortDescriptors = sortDescriptors()
+        request.sortDescriptors = log.sortDescriptorsForLogEntry(timeAscending: true)
         
         resultsController = NSFetchedResultsController(
             fetchRequest: request,
-            managedObjectContext: context,
+            managedObjectContext: log.mainContext,
             sectionNameKeyPath: nil,
             cacheName: nil)
         
@@ -111,7 +101,7 @@ extension LogController {
             return
         }
         
-        resultsController.fetchRequest.predicate = self.predicate(filter: self.filter, level: self.level)
+        resultsController.fetchRequest.predicate = log.predicateForLogEntry(filter, level: level)
         do {
             try resultsController.performFetch()
             
@@ -126,35 +116,7 @@ extension LogController {
             log.error("Unable to update results with error: \(error.localizedDescription)")
         }
     }
-    
-    private func openMessageOneDrawer() {
-        guard let resultsController = resultsController else {
-            return
-        }
-        
-        for i in 0..<resultsController.sections![0].objects!.count {
-            cellFirstMessageOpenStates.addObject(NSIndexPath(forRow: i, inSection: 0))
-        }
-    }
-
-    private func predicate(filter filter: String? = nil, level: LogLevel? = nil) -> NSPredicate {
-        var predicates: [NSPredicate] = []
-        if let filter = filter {
-            predicates.append(NSPredicate(format: "filter == %@", filter))
-        }
-        
-        if let level = level {
-            predicates.append(NSPredicate(format: "levelRaw >= %i", level.rawValue))
-        }
-        
-        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-    }
-    
-    private func sortDescriptors() -> [NSSortDescriptor] {
-        return [NSSortDescriptor(key: "timestamp", ascending: true)]
-    }
 }
-
 
 
 // MARK: - NSFetchedResultsControllerDelegate -
@@ -246,7 +208,6 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
         
         return 0
     }
-
     
     func scrollViewShouldScrollToTop(scrollView: UIScrollView) -> Bool {
         scrollToBottom(true, onlyIfAtBottom:false)
@@ -293,39 +254,24 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         
-        if cellFirstMessageOpenStates.containsObject(indexPath) {
-            cell.expandMessageOne = true
-        }
-        else {
-            cell.expandMessageOne = false
-        }
-        
-        if cellSecondMessageOpenStates.containsObject(indexPath) {
-            cell.expandMessageTwo = true
-        }
-        else {
-            cell.expandMessageTwo = false
-        }
-        
         switch entry.level {
         case .Debug:
-            cell.backgroundColor = .whiteColor()
+            cell.levelColor = .whiteColor()
             cell.customTextColor = .darkGrayColor()
         case .Error:
-            cell.backgroundColor = .redColor()
+            cell.levelColor = .redColor()
             cell.customTextColor = .whiteColor()
         case .Info:
-            cell.backgroundColor = .whiteColor()
+            cell.levelColor = .whiteColor()
             cell.customTextColor = .blackColor()
         case .Warn:
-            cell.backgroundColor = .orangeColor()
+            cell.levelColor = .orangeColor()
             cell.customTextColor = .whiteColor()
         }
         
         cell.delegate = self
         cell.dateText = timeFormatter.stringFromDate(entry.timestamp)
         cell.messageOneText = entry.message
-        cell.messageTwoText = entry.message2
         cell.functionText = entry.function
     }
     
@@ -358,9 +304,8 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
         Cell.instance.dateText = timeFormatter.stringFromDate(entry.timestamp)
         Cell.instance.functionText = entry.function
         Cell.instance.messageOneText = entry.message
-        Cell.instance.messageTwoText = entry.message2
         
-        return Cell.instance.calculateHeight(firstMessageIsOpen, messageTwoIsOpen: secondMessageIsOpen)
+        return Cell.instance.calculateHeight()
     }
     
 }
@@ -431,7 +376,7 @@ extension LogController: UIActionSheetDelegate {
     }
 
     func clear() {
-        log.clear(log.concurrentContext()) { (error) in
+        log.deleteLogEntries() { (error) in
             dispatch_async(dispatch_get_main_queue()) {
                 self.tableView.reloadData()
             }
@@ -519,9 +464,9 @@ extension LogController {
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.registerClass(MultiLineTextCell.self, forCellReuseIdentifier: MultiLineTextCell.Constants.ReuseIdentifier)
-        tableView.rowHeight = 120
         tableView.allowsSelection = false
         tableView.contentInset = UIEdgeInsetsZero
+        tableView.separatorStyle = .None
         
         filterButton.translatesAutoresizingMaskIntoConstraints = false
         filterButton.backgroundColor = UIColor.blackColor()

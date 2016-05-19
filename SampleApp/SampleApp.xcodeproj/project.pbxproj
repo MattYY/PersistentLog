@@ -18,7 +18,7 @@
 		F47E4D931CEA2A2B00A8D6A0 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D921CEA2A2B00A8D6A0 /* Global.swift */; };
 		F47E4D971CEB55C300A8D6A0 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D961CEB55C300A8D6A0 /* FilterView.swift */; };
 		F47E4D9A1CEB629D00A8D6A0 /* MultiLineTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D991CEB629D00A8D6A0 /* MultiLineTextCell.swift */; };
-		F48A6B6F1CED12F50002A100 /* UILabel+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48A6B6E1CED12F50002A100 /* UILabel+Size.swift */; };
+		F48A6B731CEE15EC0002A100 /* String+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48A6B721CEE15EC0002A100 /* String+Size.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,7 +47,7 @@
 		F47E4D921CEA2A2B00A8D6A0 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		F47E4D961CEB55C300A8D6A0 /* FilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterView.swift; path = Views/FilterView.swift; sourceTree = "<group>"; };
 		F47E4D991CEB629D00A8D6A0 /* MultiLineTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultiLineTextCell.swift; path = Views/MultiLineTextCell.swift; sourceTree = "<group>"; };
-		F48A6B6E1CED12F50002A100 /* UILabel+Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UILabel+Size.swift"; path = "Utilities/UILabel+Size.swift"; sourceTree = "<group>"; };
+		F48A6B721CEE15EC0002A100 /* String+Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Size.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,10 +92,10 @@
 		F40B68CE1CED105E00F334DA /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				F48A6B6E1CED12F50002A100 /* UILabel+Size.swift */,
 				F40B68CF1CED108900F334DA /* NSData+String.swift */,
 				F40B68D01CED108900F334DA /* NSHTTPURLResponse+Debug.swift */,
 				F40B68D11CED108900F334DA /* NSURLRequest+Debug.swift */,
+				F48A6B721CEE15EC0002A100 /* String+Size.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -206,7 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F48A6B6F1CED12F50002A100 /* UILabel+Size.swift in Sources */,
+				F48A6B731CEE15EC0002A100 /* String+Size.swift in Sources */,
 				F47E4D971CEB55C300A8D6A0 /* FilterView.swift in Sources */,
 				F47E4D871CEA28AE00A8D6A0 /* LogController.swift in Sources */,
 				F47E4D8D1CEA28B900A8D6A0 /* LogFilter.swift in Sources */,

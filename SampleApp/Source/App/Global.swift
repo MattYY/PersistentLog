@@ -9,4 +9,5 @@
 import Log
 
 
+/// Singleton
 let log = Log()

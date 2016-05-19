@@ -41,8 +41,19 @@ class MockDataGenerator {
             while true {
                 sleep(arc4random_uniform(10) + 2)
                 counter += 1
-                log?.network(request: request.debugDescription,
-                            response: "Response: \(response.debugDescription)\nData: \(responseData.utf8String)")
+                
+                log.warn("Request:\n" +
+                    "-----------------------------------\n" +
+                    "\(request.debugDescription)\n" +
+                    "\n" +
+                    "Response:\n" +
+                    "-----------------------------------\n" +
+                    "\(response.debugDescription)\n" +
+                    "\n" +
+                    "Data:\n" +
+                    "-----------------------------------\n" +
+                    "\(responseData.utf8String)"
+                )
             }
         }
         
@@ -52,7 +63,7 @@ class MockDataGenerator {
             while true {
                 sleep(arc4random_uniform(10) + 2)
                 counter += 1
-                log?.error("Banana Error", filter: LogFilter.Bannana.rawValue)
+                log.error("Banana Error", filter: LogFilter.Bannana.rawValue)
             }
         }
     }

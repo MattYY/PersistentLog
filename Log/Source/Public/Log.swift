@@ -9,9 +9,7 @@
 import Foundation
 import CoreData
 
-///
-/// Singleton
-public let log = Log()
+
 
 ///
 public class Log {
@@ -48,7 +46,7 @@ public class Log {
     }()
 
     //Hide the initializer to inforce the Singleton
-    private init() {}
+    public init() {}
 }
 
 
@@ -77,7 +75,7 @@ extension Log {
     }
 
     
-    private func addEntry(msg: String, msg2: String? = nil, level:LogLevel, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
+    private func addEntry(msg: String, level:LogLevel, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
         
         if let filter = filter where self.excludedFilters.contains(filter) {
             return
@@ -88,20 +86,14 @@ extension Log {
         }
         
         if self.echoToConsole {
-            let m2: String = msg2 != nil ? "\(msg2!)\n" : ""
-            
             let string = String(
                 "+\n" +
                 "File: \(file)\n" +
                 "Function: \(function), Line: \(line)\n" +
                 "--------------------------------------\n" +
                  msg + "\n" +
-                "--------------------------------------\n" +
-                 m2 +
-                "--------------------------------------" +
-                "\n+"
+                "+"
             )
-            
             print(string)
         }
         
@@ -115,7 +107,6 @@ extension Log {
                 entry.filter = filter
                 entry.timestamp = NSDate()
                 entry.message = msg
-                entry.message2 = msg2
                 entry.file = file
                 entry.line = line
                 entry.function = function
@@ -133,6 +124,16 @@ extension Log {
 extension Log {
 
     ///
+    public var mainContext: NSManagedObjectContext {
+        return stack.mainContext
+    }
+    
+    ///
+    public func concurrentContext() -> NSManagedObjectContext {
+        return stack.concurrentContext()
+    }
+    
+    ///
     public func setExcludedFilters(filters: [String]) {
         stack.mainContext.performBlock {
             self.excludedFilters = filters
@@ -147,14 +148,14 @@ extension Log {
     }
     
     ///
-    public func fetchRequestForLogEntity() -> NSFetchRequest {
+    public func fetchRequestForLogEntry() -> NSFetchRequest {
         let request = NSFetchRequest(entityName: Log.LogEntryEntityName)
         request.fetchBatchSize = 20
         return request
     }
 
     ///
-    public func predicateForLogEntity(filter: String? = nil, level: LogLevel? = nil, startDate: NSDate? = nil, endDate: NSDate? = nil) -> NSPredicate {
+    public func predicateForLogEntry(filter: String? = nil, level: LogLevel? = nil, startDate: NSDate? = nil, endDate: NSDate? = nil) -> NSPredicate {
         var predicates: [NSPredicate] = []
         if let filter = filter {
             predicates.append(NSPredicate(format: "filter == %@", filter))
@@ -168,21 +169,23 @@ extension Log {
     }
     
     ///
-    public func sortDescriptorsForLogEntity(timeAscending ascending: Bool) -> [NSSortDescriptor] {
+    public func sortDescriptorsForLogEntry(timeAscending ascending: Bool) -> [NSSortDescriptor] {
         return [NSSortDescriptor(key: "timestamp", ascending: ascending)]
     }
     
     ///
-    public func clear(filter: String? = nil, level: LogLevel? = nil, completion: ((error: ErrorType?) -> Void)? = nil) {
+    public func deleteLogEntries(filter: String? = nil, level: LogLevel? = nil, completion: ((error: ErrorType?) -> Void)? = nil) {
         
         let context = stack.concurrentContext()
         context.performBlock {
-            let request = self.fetchRequestForLogEntity()
-            request.predicate = self.predicateForLogEntity(filter, level: level)
+            let request = self.fetchRequestForLogEntry()
+            request.predicate = self.predicateForLogEntry(filter, level: level)
             
             do {
                 let results = try context.executeFetchRequest(request) as? [LogEntry] ?? []
-                completion?(error: nil)
+                for result in results {
+                    context.deleteObject(result)
+                }
                 
                 self.stack.saveToDisk(context, completion: completion)
             }

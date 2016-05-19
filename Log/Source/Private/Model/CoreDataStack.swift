@@ -22,7 +22,6 @@
 import UIKit
 import CoreData
 
-
 /// CoreDataStack (stack) is a basic setup that encapsulates the contexts and
 /// `Persistent Store Coordinator` (coordinator) that are necessary for using Core Data.
 /// Its written in Swift 2.2 and is supports iOS versions iOS8 and up.
@@ -91,7 +90,7 @@ class CoreDataStack {
         return true
     }
     
-    private let log = Log.sharedInstance
+    let log = Log()
     private let storeType: String
     private let storeOptions: [String: Bool]
     
