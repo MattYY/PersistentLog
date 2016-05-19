@@ -9,19 +9,20 @@
 import Foundation
 import CoreData
 
+///
+/// Singleton
+public let log = Log()
 
 ///
 public class Log {
-    static let DirectoryURLName = "Log"
-    static let LogModelName = "LogModel"
-    static let BundleId = "com.sonic.sonicdrivein.Log"
+    private static let DirectoryURLName = "Log"
+    private static let LogModelName = "LogModel"
+    private static let BundleId = "com.sonic.sonicdrivein.Log"
+    private static let LogEntryEntityName = "LogEntry"
     
-    private(set) var minLogLevel: LogLevel = .Debug
-    private(set) var excludedFilters: [String] = []
-    
-    
-    ///
-    public static let LogEntryEntityName = "LogEntry"
+    private var minLogLevel: LogLevel = .Debug
+    private var excludedFilters: [String] = []
+
     
     ///
     public var echoToConsole: Bool = false
@@ -29,9 +30,8 @@ public class Log {
     ///
     public var persistToStore: Bool = false
     
-    
     //
-    private lazy var store : CoreDataStack = {
+    private lazy var stack : CoreDataStack = {
         let bundle = NSBundle(identifier: Log.BundleId)!
         let url = NSFileManager.defaultManager().URLsForDirectory(
             .ApplicationSupportDirectory, inDomains: .UserDomainMask).last!
@@ -48,7 +48,7 @@ public class Log {
     }()
 
     //Hide the initializer to inforce the Singleton
-    init() {}
+    private init() {}
 }
 
 
@@ -75,12 +75,7 @@ extension Log {
     public func error(msg: String, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
         addEntry(msg, level: .Error, filter: filter, file:file, function:function, line:line)
     }
-    
-    ///
-    public func network(request request: String, response: String, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
-        addEntry(request, msg2: response, level: .Error, filter: filter, file:file, function:function, line:line)
-    }
-    
+
     
     private func addEntry(msg: String, msg2: String? = nil, level:LogLevel, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
         
@@ -111,7 +106,7 @@ extension Log {
         }
         
         if self.persistToStore {
-            let context = self.store.concurrentContext()
+            let context = stack.concurrentContext()
             context.performBlock() {
                 let entry = NSEntityDescription.insertNewObjectForEntityForName(
                     Log.LogEntryEntityName, inManagedObjectContext: context) as! LogEntry
@@ -125,7 +120,7 @@ extension Log {
                 entry.line = line
                 entry.function = function
                 
-                self.store.saveToDisk(context)
+                self.stack.saveToDisk(context)
             }
         }
     }
@@ -136,74 +131,30 @@ extension Log {
 
 /// Storage accessors
 extension Log {
-    
-    ///
-    public var mainContext: NSManagedObjectContext {
-        return store.mainContext
-    }
-    
-    ///
-    public func concurrentContext() -> NSManagedObjectContext {
-        return store.concurrentContext()
-    }
-    
+
     ///
     public func setExcludedFilters(filters: [String]) {
-        store.mainContext.performBlock {
+        stack.mainContext.performBlock {
             self.excludedFilters = filters
         }
     }    
     
     ///
     public func setMinimumLogLevel(level: LogLevel) {
-        store.mainContext.performBlock {
+        stack.mainContext.performBlock {
             self.minLogLevel = level
         }
     }
     
-    
     ///
-    public func clear(context: NSManagedObjectContext, filter: String? = nil, level: LogLevel? = nil,
-        completion: ((error: ErrorType?) -> Void)? = nil) {
-        
-        context.performBlock {
-            self.fetchEntries(context, filter: filter, level: level) {
-                entries in
-                
-                for entry in entries {
-                    context.deleteObject(entry)
-                }
-            }
-            
-            self.store.saveToDisk(context, completion: completion)
-        }
+    public func fetchRequestForLogEntity() -> NSFetchRequest {
+        let request = NSFetchRequest(entityName: Log.LogEntryEntityName)
+        request.fetchBatchSize = 20
+        return request
     }
-}
 
-
-
-
-//MARK - Private -
-extension Log {    
-    private func fetchEntries(
-        context: NSManagedObjectContext, filter: String? = nil, level: LogLevel? = nil, completion: (entries: [LogEntry]) -> Void) {
-        
-        context.performBlock {
-            let request = NSFetchRequest(entityName: Log.LogEntryEntityName)
-            request.predicate = self.predicate(filter, level: level)
-            
-            do {
-                let results = try context.executeFetchRequest(request) as? [LogEntry] ?? []
-                completion(entries: results)
-            }
-            catch let error as NSError {
-                self.error("Failed to get log entries: " + error.localizedDescription)
-            }
-        }
-    }
-    
-    
-    private func predicate(filter:String? = nil, level:LogLevel? = nil) -> NSPredicate {
+    ///
+    public func predicateForLogEntity(filter: String? = nil, level: LogLevel? = nil, startDate: NSDate? = nil, endDate: NSDate? = nil) -> NSPredicate {
         var predicates: [NSPredicate] = []
         if let filter = filter {
             predicates.append(NSPredicate(format: "filter == %@", filter))
@@ -215,6 +166,31 @@ extension Log {
         
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
+    
+    ///
+    public func sortDescriptorsForLogEntity(timeAscending ascending: Bool) -> [NSSortDescriptor] {
+        return [NSSortDescriptor(key: "timestamp", ascending: ascending)]
+    }
+    
+    ///
+    public func clear(filter: String? = nil, level: LogLevel? = nil, completion: ((error: ErrorType?) -> Void)? = nil) {
+        
+        let context = stack.concurrentContext()
+        context.performBlock {
+            let request = self.fetchRequestForLogEntity()
+            request.predicate = self.predicateForLogEntity(filter, level: level)
+            
+            do {
+                let results = try context.executeFetchRequest(request) as? [LogEntry] ?? []
+                completion?(error: nil)
+                
+                self.stack.saveToDisk(context, completion: completion)
+            }
+            catch let error as NSError {
+                completion?(error: error)
+                self.error("Failed to get log entries: " + error.localizedDescription)
+            }
+        }
+    }
 }
-
 
