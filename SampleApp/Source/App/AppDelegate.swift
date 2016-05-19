@@ -16,8 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        log.echoToConsole = true
-        log.persistToStore = true
+        log?.echoToConsole = true
+        log?.persistToStore = true
         
         let vc = LogController(filters: LogFilter.values())
         window = UIWindow(frame: UIScreen.mainScreen().bounds)

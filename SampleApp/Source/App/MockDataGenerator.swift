@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Log
 
 class MockDataGenerator {
     static let Url = NSURL(string: "http://test.someurl.com")!
@@ -35,21 +34,25 @@ class MockDataGenerator {
         return data.dataUsingEncoding(NSUTF8StringEncoding)!
     }()
     
-    
-    
     static func generate() {
-        let log = Log.sharedInstance
         let queue1 = dispatch_queue_create("AppTestQueue", nil)
-        //let queue2 = dispatch_queue_create("AppTestQueue", nil)
-        var counter = 0
-        
-        
         dispatch_async(queue1) {
+            var counter = 0
             while true {
-                sleep(3)
+                sleep(arc4random_uniform(10) + 2)
                 counter += 1
-                log.network(request: request.debugDescription,
+                log?.network(request: request.debugDescription,
                             response: "Response: \(response.debugDescription)\nData: \(responseData.utf8String)")
+            }
+        }
+        
+        let queue2 = dispatch_queue_create("AppTestQueue", nil)
+        dispatch_async(queue2) {
+            var counter = 0
+            while true {
+                sleep(arc4random_uniform(10) + 2)
+                counter += 1
+                log?.error("Banana Error", filter: LogFilter.Bannana.rawValue)
             }
         }
     }

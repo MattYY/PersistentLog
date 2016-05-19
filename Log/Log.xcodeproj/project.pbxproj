@@ -12,8 +12,8 @@
 		F47E4D801CEA1F0E00A8D6A0 /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D781CEA1F0E00A8D6A0 /* LogEntry.swift */; };
 		F47E4D811CEA1F0E00A8D6A0 /* LogModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D791CEA1F0E00A8D6A0 /* LogModel.xcdatamodeld */; };
 		F47E4D821CEA1F0E00A8D6A0 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D7C1CEA1F0E00A8D6A0 /* Log.swift */; };
+		F48A6B711CED183B0002A100 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48A6B701CED183B0002A100 /* LogLevel.swift */; };
 		F4A530081CE9FB9200800562 /* Log.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A52FFD1CE9FB9100800562 /* Log.framework */; };
-		F4A5300D1CE9FB9200800562 /* LogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A5300C1CE9FB9200800562 /* LogTests.swift */; };
 		F4A5301B1CE9FC1000800562 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = F4A530191CE9FC1000800562 /* Log.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -33,10 +33,9 @@
 		F47E4D781CEA1F0E00A8D6A0 /* LogEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = "<group>"; };
 		F47E4D7A1CEA1F0E00A8D6A0 /* LogModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LogModel.xcdatamodel; sourceTree = "<group>"; };
 		F47E4D7C1CEA1F0E00A8D6A0 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		F48A6B701CED183B0002A100 /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
 		F4A52FFD1CE9FB9100800562 /* Log.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Log.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4A530071CE9FB9200800562 /* LogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F4A5300C1CE9FB9200800562 /* LogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTests.swift; sourceTree = "<group>"; };
-		F4A5300E1CE9FB9200800562 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4A530181CE9FC1000800562 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		F4A530191CE9FC1000800562 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Log.h; path = Resources/Log.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,6 +62,7 @@
 		F47E4D731CEA1F0E00A8D6A0 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				F48A6B701CED183B0002A100 /* LogLevel.swift */,
 				F47E4D751CEA1F0E00A8D6A0 /* Model */,
 			);
 			name = Private;
@@ -94,7 +94,6 @@
 			children = (
 				F4A52FFF1CE9FB9200800562 /* Source */,
 				F4A530171CE9FBF200800562 /* Resources */,
-				F4A5300B1CE9FB9200800562 /* LogTests */,
 				F4A52FFE1CE9FB9100800562 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -116,15 +115,6 @@
 			);
 			name = Source;
 			path = Log;
-			sourceTree = "<group>";
-		};
-		F4A5300B1CE9FB9200800562 /* LogTests */ = {
-			isa = PBXGroup;
-			children = (
-				F4A5300C1CE9FB9200800562 /* LogTests.swift */,
-				F4A5300E1CE9FB9200800562 /* Info.plist */,
-			);
-			path = LogTests;
 			sourceTree = "<group>";
 		};
 		F4A530171CE9FBF200800562 /* Resources */ = {
@@ -245,6 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F47E4D801CEA1F0E00A8D6A0 /* LogEntry.swift in Sources */,
+				F48A6B711CED183B0002A100 /* LogLevel.swift in Sources */,
 				F47E4D821CEA1F0E00A8D6A0 /* Log.swift in Sources */,
 				F47E4D811CEA1F0E00A8D6A0 /* LogModel.xcdatamodeld in Sources */,
 				F47E4D7E1CEA1F0E00A8D6A0 /* CoreDataStack.swift in Sources */,
@@ -256,7 +247,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4A5300D1CE9FB9200800562 /* LogTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

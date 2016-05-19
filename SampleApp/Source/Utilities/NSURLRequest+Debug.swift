@@ -19,6 +19,6 @@ extension NSURLRequest {
             bodyString = (NSString(data: body, encoding: NSUTF8StringEncoding) ?? "") as String
         }
         
-        return "URL: \(url)\nHeader: \(header)\nBody: \(bodyString)"
+        return "Request: URL: \(url)\nHeader: \(header)\nBody: \(bodyString)"
     }
 }

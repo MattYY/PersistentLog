@@ -71,11 +71,10 @@ internal class MultiLineTextCell: UITableViewCell {
     private let dateLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = UIFont.systemFontOfSize(14)
+        view.font = UIFont.boldSystemFontOfSize(14)
         view.textColor = .blackColor()
         view.textAlignment = .Left
         view.numberOfLines = 1
-        view.backgroundColor = UIColor.orangeColor()
         return view
     }()
     
@@ -100,20 +99,20 @@ internal class MultiLineTextCell: UITableViewCell {
         let button = UIButton(frame: CGRect.zero)
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        let title = "Show"
+        let title = "Expand"
         button.setTitle(title, forState: .Normal)
-        button.titleLabel?.font = UIFont.systemFontOfSize(14)
-        
-        button.backgroundColor = .yellowColor()
+        button.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
+        button.setTitleColor(.blackColor(), forState: .Normal)
         button.contentHorizontalAlignment = .Left
-        
+        button.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
+        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         return button
     }()
     
     private let messageOneTextView: UITextView = {
         let view = UITextView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .greenColor()
+        view.backgroundColor = .whiteColor()
         return view
     }()
     
@@ -122,20 +121,20 @@ internal class MultiLineTextCell: UITableViewCell {
         let button = UIButton(frame: CGRect.zero)
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        let title = "Show"
+        let title = "Expand"
         button.setTitle(title, forState: .Normal)
-        button.titleLabel?.font = UIFont.systemFontOfSize(14)
+        button.titleLabel?.font = UIFont.boldSystemFontOfSize(14)
         button.setTitleColor(.blackColor(), forState: .Normal)
-        button.backgroundColor = .yellowColor()
         button.contentHorizontalAlignment = .Left
-        
+        button.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
+        button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         return button
     }()
     
     private let messageTwoTextView: UITextView = {
         let view = UITextView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .greenColor()
+        view.backgroundColor = .whiteColor()
         return view
     }()
     
@@ -156,10 +155,7 @@ internal class MultiLineTextCell: UITableViewCell {
         super.layoutSubviews()
 
         dateLabel.textColor = customTextColor
-        functionLabel.textColor = customTextColor
-        messageOneButton.setTitleColor(customTextColor, forState: .Normal)
-        messageTwoButton.setTitleColor(customTextColor, forState: .Normal)
-        
+        functionLabel.textColor = customTextColor        
         
         if expandMessageOne {
             messageOneTextView.hidden = false
@@ -191,6 +187,8 @@ internal class MultiLineTextCell: UITableViewCell {
 extension MultiLineTextCell {
     
     private func layout() {
+        backgroundColor = .whiteColor()
+        
         contentView.addSubview(dateLabel)
         contentView.addSubview(functionLabel)
         

@@ -29,9 +29,6 @@ public class Log {
     ///
     public var persistToStore: Bool = false
     
-    /// I am a Singleton!
-    public static let sharedInstance = Log()
-    
     
     //
     private lazy var store : CoreDataStack = {
@@ -46,13 +43,12 @@ public class Log {
             try! NSFileManager.defaultManager().createDirectoryAtURL(
                 url, withIntermediateDirectories: true, attributes: nil)
         }
-        
-        print(url)
+
         return try! CoreDataStack(bundle: bundle, directoryURL: url, modelName: Log.LogModelName)
     }()
 
     //Hide the initializer to inforce the Singleton
-    private init() {}
+    init() {}
 }
 
 

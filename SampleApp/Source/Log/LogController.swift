@@ -48,7 +48,6 @@ class LogController: UIViewController {
         }
     }    
     
-    //MARK: - View Controller Lifecycle
     required init(filters: [String] = []) {
         self.filters = filters
         
@@ -76,7 +75,21 @@ class LogController: UIViewController {
         setupFetchedResultsController()
     }
     
-    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if !isMovingFromParentViewController() {
+            scrollToBottom(false, onlyIfAtBottom:false)
+        }
+    }
+}
+
+
+
+
+
+//MARK: - Data -
+extension LogController {
     private func setupFetchedResultsController() {
         let context = log.mainContext
         let request = NSFetchRequest(entityName: Log.LogEntryEntityName)
@@ -93,22 +106,6 @@ class LogController: UIViewController {
         updateResults()
     }
     
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        
-        if !isMovingFromParentViewController() {
-            scrollToBottom(false, onlyIfAtBottom:false)
-        }
-    }
-}
-
-
-
-
-
-//MARK: - Data -
-extension LogController {
     private func updateResults() {
         guard let resultsController = resultsController else {
             return
@@ -230,9 +227,10 @@ extension LogController: FilterViewDelegate {
 extension LogController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(MultiLineTextCell.Constants.ReuseIdentifier) as! MultiLineTextCell
-        updateCell(cell, indexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier(
+            MultiLineTextCell.Constants.ReuseIdentifier) as! MultiLineTextCell
         
+        updateCell(cell, indexPath: indexPath)
         return cell
     }
     
@@ -256,33 +254,31 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func scrollToBottom(animated: Bool, onlyIfAtBottom: Bool = true) {
-        if tableView.tracking {
+        guard !tableView.tracking else{
             return
         }
         
-        if let sections = resultsController?.sections {
-            let count = sections[0].numberOfObjects
-            
-            if count > 0 {
-                let lastRow = NSIndexPath(forRow: count-1, inSection: 0)
+        guard let rowCount = resultsController?.sections?[0].numberOfObjects else {
+            return
+        }
+        
+        if rowCount > 0 {
+            let lastRow = NSIndexPath(forRow: rowCount - 1, inSection: 0)
+            if onlyIfAtBottom {
+                var bottomPoint = tableView.contentOffset
+                bottomPoint.y += tableView.frame.height + tableView.rowHeight/2 - 10
                 
-                if onlyIfAtBottom {
-                    var bottomPoint = tableView.contentOffset
-                    bottomPoint.y += tableView.frame.height + tableView.rowHeight/2 - 10
-                    
-                    if let lastVisibleIndexPath = tableView.indexPathForRowAtPoint(bottomPoint) {
-                        if lastVisibleIndexPath.row == lastRow.row {
-                            self.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: .Bottom, animated: animated)
-                        }
-                    }
-                    else {
-                        self.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: .Bottom, animated: animated)
-                    }
+                if let lastVisibleIndexPath = tableView.indexPathForRowAtPoint(bottomPoint)
+                    where lastVisibleIndexPath.row == lastRow.row {
+                    self.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: .Bottom, animated: animated)
                 }
                 else {
                     self.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: .Bottom, animated: animated)
-                    
                 }
+            }
+            else {
+                self.tableView.scrollToRowAtIndexPath(lastRow, atScrollPosition: .Bottom, animated: animated)
+                
             }
         }
     }
@@ -370,7 +366,7 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-// MARK: - MultiLineTextCellDelegate
+// MARK: - MultiLineTextCellDelegate -
 extension LogController: MultiLineTextCellDelegate {
     
     func multiLineTextCell(cell: MultiLineTextCell, messageOneOpen: Bool, messageTwoOpen: Bool) {
@@ -397,7 +393,7 @@ extension LogController: MultiLineTextCellDelegate {
 }
 
 
-// MARK: - Actions
+// MARK: - Actions -
 extension LogController: UIActionSheetDelegate {
     
     func bindActions() {
@@ -516,7 +512,7 @@ extension LogController: UIActionSheetDelegate {
 
 
 
-// MARK: - Layout
+// MARK: - Layout -
 extension LogController {
     
     private func layout() {
@@ -525,6 +521,7 @@ extension LogController {
         tableView.registerClass(MultiLineTextCell.self, forCellReuseIdentifier: MultiLineTextCell.Constants.ReuseIdentifier)
         tableView.rowHeight = 120
         tableView.allowsSelection = false
+        tableView.contentInset = UIEdgeInsetsZero
         
         filterButton.translatesAutoresizingMaskIntoConstraints = false
         filterButton.backgroundColor = UIColor.blackColor()

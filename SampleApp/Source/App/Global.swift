@@ -9,4 +9,4 @@
 import Log
 
 
-let log = Log.sharedInstance
+let log = Log()
