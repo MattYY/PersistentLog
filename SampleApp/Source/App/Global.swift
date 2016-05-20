@@ -11,3 +11,12 @@ import Log
 
 /// Singleton
 let log = Log()
+
+
+var USING_SIMULATOR : Bool {
+    #if (arch(i386) || arch(x86_64)) && os(iOS)
+        return true
+    #else
+        return false
+    #endif
+}

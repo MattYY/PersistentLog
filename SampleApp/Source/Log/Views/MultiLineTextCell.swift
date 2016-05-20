@@ -72,10 +72,11 @@ internal class MultiLineTextCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .whiteColor()
         view.textColor = .blackColor()
-        view.font = .systemFontOfSize(11)
+        view.font = .systemFontOfSize(12)
         view.scrollEnabled = false
         view.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10)
         view.textContainer.lineBreakMode = .ByCharWrapping
+        view.editable = false
         
         return view
     }()

@@ -21,7 +21,6 @@ class LogController: UIViewController {
     
     private let filters: [String]
     private let tableView: UITableView = UITableView()
-
     private let filterButton: UIButton = UIButton()
     private let filterView: FilterView
     
@@ -253,10 +252,20 @@ extension LogController: UIActionSheetDelegate {
     }
 
     func refreshData() {
+        
+        //only reload if there are items in the table
+        guard let sections = resultsController?.sections
+            where sections[0].numberOfObjects > 0 else {
+            
+            return
+        }
+        
+        
         let top = NSIndexPath(forRow: 0, inSection: 0)
         tableView.scrollToRowAtIndexPath(top, atScrollPosition: .Top, animated: true)
         tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
     }
+    
     
     func clear() {
         log.deleteLogEntries() { (error) in
@@ -267,19 +276,18 @@ extension LogController: UIActionSheetDelegate {
     }
     
     func share() {
-        entriesAsString(500) {
-            (str) -> () in
-            
-            if let str = str {
-                var items = [AnyObject]()
-                items.append(str)
-                let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        if !USING_SIMULATOR {
+            entriesAsString(500) {
+                str -> () in
+                
+                let activityViewController = UIActivityViewController(activityItems: [str], applicationActivities: nil)
                 self.presentViewController(activityViewController, animated: true, completion: nil)
             }
         }
     }
     
-    func entriesAsString(limit: Int?, completion:(str: String?) -> ()) {
+    
+    private func entriesAsString(limit: Int?, completion:(str: String) -> ()) {
         let context = log.concurrentContext()
         context.performBlock() { [weak self] () -> Void in
 
@@ -293,33 +301,22 @@ extension LogController: UIActionSheetDelegate {
             request.predicate = predicate
             request.sortDescriptors = descriptors
             
-            var results: [AnyObject]? = nil
+            let buffer = NSMutableString(string: "")
             do {
-                results = try context.executeFetchRequest(request)
-                
-                if let results = results as? [LogEntry] {
-                    let buffer = NSMutableString()
-                    for result in results {
-                        let str = "\(self!.timeFormatter.stringFromDate(result.timestamp) + ":")\n" +
-                            "\(result.function)\n" +
-                            "\(result.message)\n\n"
-                        
-                        buffer.appendString(str)
-                    }
-                    dispatch_async(dispatch_get_main_queue()) {
-                        completion(str: String(buffer))
-                    }
-                }
-                else {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        completion(str:nil)
-                    }
+                let results = try context.executeFetchRequest(request) as? [LogEntry] ?? []
+                for result in results {
+                    let str = "+++++=\n" +
+                        "\(self!.timeFormatter.stringFromDate(result.timestamp) + ":")\n" +
+                        "Line: \(result.line), Func: \(result.function)\n" +
+                        "\(result.message)\n +++++\n\n"
+                    
+                    buffer.appendString(str)
                 }
             }
-            catch _ as NSError {
-                dispatch_async(dispatch_get_main_queue()) {
-                    completion(str: nil)
-                }
+            catch _ as NSError {}
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                completion(str: String(buffer))
             }
         }
     }
@@ -333,7 +330,6 @@ extension LogController: UIActionSheetDelegate {
 extension LogController {
     
     private func layout() {
-        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.registerClass(MultiLineTextCell.self, forCellReuseIdentifier: MultiLineTextCell.Constants.ReuseIdentifier)
         tableView.allowsSelection = false

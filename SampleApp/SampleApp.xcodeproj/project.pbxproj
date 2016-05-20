@@ -11,21 +11,23 @@
 		F47E4D871CEA28AE00A8D6A0 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D841CEA28AE00A8D6A0 /* LogController.swift */; };
 		F47E4D8D1CEA28B900A8D6A0 /* LogFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D8B1CEA28B900A8D6A0 /* LogFilter.swift */; };
 		F47E4D8E1CEA28B900A8D6A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D8C1CEA28B900A8D6A0 /* AppDelegate.swift */; };
-		F47E4D911CEA294B00A8D6A0 /* Log.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F47E4D901CEA294B00A8D6A0 /* Log.framework */; };
 		F47E4D931CEA2A2B00A8D6A0 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D921CEA2A2B00A8D6A0 /* Global.swift */; };
 		F47E4D971CEB55C300A8D6A0 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D961CEB55C300A8D6A0 /* FilterView.swift */; };
 		F47E4D9A1CEB629D00A8D6A0 /* MultiLineTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D991CEB629D00A8D6A0 /* MultiLineTextCell.swift */; };
 		F48A6B731CEE15EC0002A100 /* String+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48A6B721CEE15EC0002A100 /* String+Size.swift */; };
 		F48A6B771CEE51250002A100 /* PrettyLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48A6B761CEE51250002A100 /* PrettyLog.swift */; };
+		F48A6B821CEF9D850002A100 /* Log.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F48A6B811CEF9D850002A100 /* Log.framework */; };
+		F48A6B831CEF9D950002A100 /* Log.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F48A6B811CEF9D850002A100 /* Log.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0EE173AD1AFCFEC80021F3A8 /* Embed Frameworks */ = {
+		F48A6B7F1CEF99550002A100 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F48A6B831CEF9D950002A100 /* Log.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -33,17 +35,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0EE173751AFCFC990021F3A8 /* Log Sample App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Log Sample App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0EE173751AFCFC990021F3A8 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F40B68C01CEC9FE500F334DA /* MockDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataGenerator.swift; sourceTree = "<group>"; };
 		F47E4D841CEA28AE00A8D6A0 /* LogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
 		F47E4D8B1CEA28B900A8D6A0 /* LogFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFilter.swift; sourceTree = "<group>"; };
 		F47E4D8C1CEA28B900A8D6A0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F47E4D901CEA294B00A8D6A0 /* Log.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Log.framework; path = "../Debug-iphonesimulator/Log.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47E4D921CEA2A2B00A8D6A0 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		F47E4D961CEB55C300A8D6A0 /* FilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterView.swift; path = Views/FilterView.swift; sourceTree = "<group>"; };
 		F47E4D991CEB629D00A8D6A0 /* MultiLineTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultiLineTextCell.swift; path = Views/MultiLineTextCell.swift; sourceTree = "<group>"; };
 		F48A6B721CEE15EC0002A100 /* String+Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Size.swift"; sourceTree = "<group>"; };
 		F48A6B761CEE51250002A100 /* PrettyLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrettyLog.swift; path = Utilities/PrettyLog.swift; sourceTree = "<group>"; };
+		F48A6B811CEF9D850002A100 /* Log.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Log.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F47E4D911CEA294B00A8D6A0 /* Log.framework in Frameworks */,
+				F48A6B821CEF9D850002A100 /* Log.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +72,7 @@
 		0EE173761AFCFC990021F3A8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0EE173751AFCFC990021F3A8 /* Log Sample App.app */,
+				0EE173751AFCFC990021F3A8 /* SampleApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,7 +119,7 @@
 		F47E4D8F1CEA290B00A8D6A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F47E4D901CEA294B00A8D6A0 /* Log.framework */,
+				F48A6B811CEF9D850002A100 /* Log.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -134,22 +136,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0EE173741AFCFC990021F3A8 /* Log Sample App */ = {
+		0EE173741AFCFC990021F3A8 /* SampleApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0EE173941AFCFC9A0021F3A8 /* Build configuration list for PBXNativeTarget "Log Sample App" */;
+			buildConfigurationList = 0EE173941AFCFC9A0021F3A8 /* Build configuration list for PBXNativeTarget "SampleApp" */;
 			buildPhases = (
 				0EE173711AFCFC990021F3A8 /* Sources */,
 				0EE173721AFCFC990021F3A8 /* Frameworks */,
 				0EE173731AFCFC990021F3A8 /* Resources */,
-				0EE173AD1AFCFEC80021F3A8 /* Embed Frameworks */,
+				F48A6B7F1CEF99550002A100 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Log Sample App";
+			name = SampleApp;
 			productName = FSLLogSampleApp;
-			productReference = 0EE173751AFCFC990021F3A8 /* Log Sample App.app */;
+			productReference = 0EE173751AFCFC990021F3A8 /* SampleApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -180,7 +182,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0EE173741AFCFC990021F3A8 /* Log Sample App */,
+				0EE173741AFCFC990021F3A8 /* SampleApp */,
 			);
 		};
 /* End PBXProject section */
@@ -252,7 +254,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -291,7 +293,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -304,7 +306,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fossil.$(PRODUCT_NAME:rfc1034identifier)";
@@ -317,7 +319,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fossil.$(PRODUCT_NAME:rfc1034identifier)";
@@ -337,7 +339,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0EE173941AFCFC9A0021F3A8 /* Build configuration list for PBXNativeTarget "Log Sample App" */ = {
+		0EE173941AFCFC9A0021F3A8 /* Build configuration list for PBXNativeTarget "SampleApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0EE173951AFCFC9A0021F3A8 /* Debug */,
