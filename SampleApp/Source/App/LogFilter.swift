@@ -13,13 +13,15 @@ enum LogFilter: String {
     case Orange = "Orange"
     case Bannana = "Bannana"
     case Kiwi = "Kiwi"
+    case Network = "Network"
     
     static func all() -> [LogFilter] {
         return [
             Apple,
             Orange,
             Bannana,
-            Kiwi]
+            Kiwi,
+            Network]
     }
     
     static func values() -> [String] {

@@ -34,26 +34,16 @@ class MockDataGenerator {
         return data.dataUsingEncoding(NSUTF8StringEncoding)!
     }()
     
+    
+    
     static func generate() {
         let queue1 = dispatch_queue_create("AppTestQueue", nil)
         dispatch_async(queue1) {
             var counter = 0
             while true {
-                sleep(arc4random_uniform(10) + 2)
-                counter += 1
-                
-                log.warn("Request:\n" +
-                    "-----------------------------------\n" +
-                    "\(request.debugDescription)\n" +
-                    "\n" +
-                    "Response:\n" +
-                    "-----------------------------------\n" +
-                    "\(response.debugDescription)\n" +
-                    "\n" +
-                    "Data:\n" +
-                    "-----------------------------------\n" +
-                    "\(responseData.utf8String)"
-                )
+                sleep(arc4random_uniform(20) + 2)
+                counter += 1                
+                log.warn(PrettyLog.network(request, response: response, data: responseData), filter: LogFilter.Network.rawValue)
             }
         }
         
@@ -61,9 +51,29 @@ class MockDataGenerator {
         dispatch_async(queue2) {
             var counter = 0
             while true {
-                sleep(arc4random_uniform(10) + 2)
+                sleep(arc4random_uniform(20) + 2)
                 counter += 1
                 log.error("Banana Error", filter: LogFilter.Bannana.rawValue)
+            }
+        }
+        
+        let queue3 = dispatch_queue_create("AppTestQueue", nil)
+        dispatch_async(queue3) {
+            var counter = 0
+            while true {
+                sleep(arc4random_uniform(20) + 2)
+                counter += 1
+                log.info("Random Info Random Info Random Info Random Info Random Info Random Info Random Info", filter: LogFilter.Apple.rawValue)
+            }
+        }
+        
+        let queue4 = dispatch_queue_create("AppTestQueue", nil)
+        dispatch_async(queue4) {
+            var counter = 0
+            while true {
+                sleep(arc4random_uniform(20) + 2)
+                counter += 1
+                log.debug("Random Info Random Info Random Info Random Info Random Info Random Info Random Info", filter: LogFilter.Apple.rawValue)
             }
         }
     }

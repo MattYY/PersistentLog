@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol MultiLineTextCellDelegate: class {
-    func multiLineTextCell(cell: MultiLineTextCell, messageOneOpen: Bool, messageTwoOpen: Bool)
-}
-
 internal class MultiLineTextCell: UITableViewCell {
     struct Constants {
         static let ReuseIdentifier = "MultiLineTextCellReuseIdentifier"
@@ -19,9 +15,7 @@ internal class MultiLineTextCell: UITableViewCell {
         private static let MessageButtonHeight = CGFloat(30.0)
     }
     
-    private var messageOneTextViewHeightConstraint: NSLayoutConstraint!
-    weak var delegate: MultiLineTextCellDelegate?
-    
+    private var messageOneTextViewHeightConstraint: NSLayoutConstraint!    
     var levelColor: UIColor = .whiteColor() {
         didSet {
             self.setNeedsLayout()
@@ -60,18 +54,16 @@ internal class MultiLineTextCell: UITableViewCell {
         view.textColor = .blackColor()
         view.textAlignment = .Left
         view.numberOfLines = 1
-        view.backgroundColor = .blueColor()
         return view
     }()
     
     private let functionLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.font = UIFont.systemFontOfSize(14)
+        view.font = UIFont.systemFontOfSize(12)
         view.textColor = .blackColor()
         view.textAlignment = .Left
         view.numberOfLines = 1
-        view.backgroundColor = .greenColor()
         return view
     }()
 
@@ -80,7 +72,7 @@ internal class MultiLineTextCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .whiteColor()
         view.textColor = .blackColor()
-        view.font = .systemFontOfSize(12)
+        view.font = .systemFontOfSize(11)
         view.scrollEnabled = false
         view.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10)
         view.textContainer.lineBreakMode = .ByCharWrapping
@@ -164,7 +156,7 @@ extension MultiLineTextCell {
             toItem: dateLabel,
             attribute: .Bottom,
             multiplier: 1.0,
-            constant: Constants.SmallMargin)
+            constant: 0)
         )
         contentView.addConstraint(NSLayoutConstraint(
             item: functionLabel,
@@ -271,7 +263,7 @@ extension MultiLineTextCell {
 extension MultiLineTextCell {
 
     func calculateHeight() -> CGFloat {
-        let smallMargins = Constants.SmallMargin * 3
+        let smallMargins = Constants.SmallMargin * 2
         
         let viewWidth = self.bounds.width - Constants.SmallMargin * 2
         let dateLabelHeight = dateText.height(viewWidth: viewWidth, font: dateLabel.font)
