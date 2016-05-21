@@ -6,16 +6,16 @@
 //
 
 import Foundation
-import Logger
+import PersistentLog
 
 
 /// Logger
-let log: Logger = {
+let log: PersistentLog = {
     let url = NSFileManager.defaultManager().URLsForDirectory(
         .ApplicationSupportDirectory, inDomains: .UserDomainMask).last!
     url.URLByAppendingPathComponent("Log")
     
-    return Logger(directoryURL: url)
+    return PersistentLog(directoryURL: url)
 }()
 
 

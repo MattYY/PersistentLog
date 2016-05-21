@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F40B68C11CEC9FE500F334DA /* MockDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40B68C01CEC9FE500F334DA /* MockDataGenerator.swift */; };
-		F476BB971CEFC97400123FCF /* Logger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F476BB961CEFC97400123FCF /* Logger.framework */; };
-		F476BB981CEFC97400123FCF /* Logger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F476BB961CEFC97400123FCF /* Logger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F476BBA51CF0FBA100123FCF /* PersistentLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F476BBA31CF0FB9C00123FCF /* PersistentLog.framework */; };
+		F476BBA61CF0FBA100123FCF /* PersistentLog.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F476BBA31CF0FB9C00123FCF /* PersistentLog.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F47E4D871CEA28AE00A8D6A0 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D841CEA28AE00A8D6A0 /* LogController.swift */; };
 		F47E4D8D1CEA28B900A8D6A0 /* LogFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D8B1CEA28B900A8D6A0 /* LogFilter.swift */; };
 		F47E4D8E1CEA28B900A8D6A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D8C1CEA28B900A8D6A0 /* AppDelegate.swift */; };
@@ -21,13 +21,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F48A6B7F1CEF99550002A100 /* Embed Frameworks */ = {
+		F476BB9F1CF0F9C500123FCF /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F476BB981CEFC97400123FCF /* Logger.framework in Embed Frameworks */,
+				F476BBA61CF0FBA100123FCF /* PersistentLog.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -37,7 +37,7 @@
 /* Begin PBXFileReference section */
 		0EE173751AFCFC990021F3A8 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F40B68C01CEC9FE500F334DA /* MockDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDataGenerator.swift; sourceTree = "<group>"; };
-		F476BB961CEFC97400123FCF /* Logger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Logger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F476BBA31CF0FB9C00123FCF /* PersistentLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PersistentLog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47E4D841CEA28AE00A8D6A0 /* LogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
 		F47E4D8B1CEA28B900A8D6A0 /* LogFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFilter.swift; sourceTree = "<group>"; };
 		F47E4D8C1CEA28B900A8D6A0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -53,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F476BB971CEFC97400123FCF /* Logger.framework in Frameworks */,
+				F476BBA51CF0FBA100123FCF /* PersistentLog.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,7 +119,7 @@
 		F47E4D8F1CEA290B00A8D6A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F476BB961CEFC97400123FCF /* Logger.framework */,
+				F476BBA31CF0FB9C00123FCF /* PersistentLog.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -143,7 +143,7 @@
 				0EE173711AFCFC990021F3A8 /* Sources */,
 				0EE173721AFCFC990021F3A8 /* Frameworks */,
 				0EE173731AFCFC990021F3A8 /* Resources */,
-				F48A6B7F1CEF99550002A100 /* Embed Frameworks */,
+				F476BB9F1CF0F9C500123FCF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

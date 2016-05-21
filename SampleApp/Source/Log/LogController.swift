@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-import Logger
+import PersistentLog
 
 class LogController: UIViewController {
     private struct Constants {

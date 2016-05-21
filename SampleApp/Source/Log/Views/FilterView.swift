@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Logger
+import PersistentLog
 
 protocol FilterViewDelegate: class {
     func filterViewDidUpdateLevel(level: LogLevel)

@@ -12,10 +12,10 @@ import CoreData
 
 
 ///
-public class Logger {
+public class PersistentLog {
     private static let DirectoryURLName = "Log"
     private static let LogModelName = "LogModel"
-    private static let BundleId = "com.Logger"
+    private static let BundleId = "com.PersistentLog"
     private static let LogEntryEntityName = "LogEntry"
     
     private var minLogLevel: LogLevel = .Debug
@@ -36,15 +36,15 @@ public class Logger {
     /// - parameter directoryURL: URL at which you would like to store the underlying database files.
     ///
     public init(directoryURL: NSURL) {
-         let bundle = NSBundle(identifier: Logger.BundleId)!
-        stack = try! CoreDataStack(bundle: bundle, directoryURL: directoryURL, modelName: Logger.LogModelName)
+         let bundle = NSBundle(identifier: PersistentLog.BundleId)!
+        stack = try! CoreDataStack(bundle: bundle, directoryURL: directoryURL, modelName: PersistentLog.LogModelName)
     }
 }
 
 
 
 /// Logging accessors
-extension Logger {
+extension PersistentLog {
     
     /// Interface for logging `debug` level messages
     ///
@@ -149,7 +149,7 @@ extension Logger {
             let context = stack.concurrentContext()
             context.performBlock() {
                 let entry = NSEntityDescription.insertNewObjectForEntityForName(
-                    Logger.LogEntryEntityName, inManagedObjectContext: context) as! LogEntry
+                    PersistentLog.LogEntryEntityName, inManagedObjectContext: context) as! LogEntry
                 
                 entry.level = level
                 entry.filter = filter
@@ -169,7 +169,7 @@ extension Logger {
 
 
 /// Storage accessors
-extension Logger {
+extension PersistentLog {
 
     /// The underlying Core Data context that operates on the main queue.
     public var mainContext: NSManagedObjectContext {
@@ -197,7 +197,7 @@ extension Logger {
     
     /// Returns a `NSFetchRequest` object that can be used to query for `LogEntry` items.
     public func fetchRequestForLogEntry() -> NSFetchRequest {
-        let request = NSFetchRequest(entityName: Logger.LogEntryEntityName)
+        let request = NSFetchRequest(entityName: PersistentLog.LogEntryEntityName)
         request.fetchBatchSize = 20
         return request
     }

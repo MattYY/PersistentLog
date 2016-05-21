@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 4.3">
-    <entity name="LogEntry" representedClassName="Logger.LogEntry" syncable="YES">
+    <entity name="LogEntry" representedClassName="PersistentLog.LogEntry" syncable="YES">
         <attribute name="file" attributeType="String" syncable="YES"/>
         <attribute name="filter" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="function" attributeType="String" syncable="YES"/>
