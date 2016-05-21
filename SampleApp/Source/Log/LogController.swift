@@ -28,8 +28,6 @@ class LogController: UIViewController {
     private var isScrolledToTop: Bool {
         return tableView.contentOffset.y == -64
     }
-    private var indexPathsToInsert: NSMutableSet = []
-
  
     private var timeFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
@@ -67,12 +65,7 @@ class LogController: UIViewController {
         super.viewDidLoad()
         layout()
         bindActions()
-        
-        tableView.bounces = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        filterView.delegate = self
-        
+
         title = "Log"
         
         setupFetchedResultsController()
@@ -112,9 +105,25 @@ class LogController: UIViewController {
 
 //MARK: - NSFetchedResultsControllerDelegate -
 extension LogController: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        if isScrolledToTop {
-            self.tableView.reloadData()
+    func controller(controller: NSFetchedResultsController,
+                    didChangeObject anObject: AnyObject,
+                    atIndexPath indexPath: NSIndexPath?,
+                    forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        
+        switch type {
+        case .Insert:
+            if let newIndexPath = newIndexPath {
+                if !isScrolledToTop {
+                    tableView.reloadData()
+                    tableView.contentOffset.y += heightForCellAtIndexPath(newIndexPath)
+                }
+                else {
+                    tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .None)
+                }
+            }
+        default:
+            break
         }
     }
 }
@@ -122,7 +131,6 @@ extension LogController: NSFetchedResultsControllerDelegate {
 
 // MARK: - FilterViewDelegate -
 extension LogController: FilterViewDelegate {
-    
     func filterViewDidUpdateLevel(level: LogLevel) {
         self.level = level
     }
@@ -139,14 +147,14 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(
-            MultiLineTextCell.Constants.ReuseIdentifier) as! MultiLineTextCell
+            MultiLineTextCell.Constants.ReuseIdentifier, forIndexPath: indexPath) as! MultiLineTextCell
         
         updateCell(cell, indexPath: indexPath)
         return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return heightForCellAtIndexPath(indexPath)
+        return 200
     }
     
     
@@ -187,29 +195,6 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
         cell.messageOneText = entry.message
         cell.functionText = "Line: \(entry.line), Func: \(entry.function)"
     }
-    
-    
-    private func heightForCellAtIndexPath(indexPath: NSIndexPath) -> CGFloat {
-        guard let resultsController = resultsController else {
-            return 0.0
-        }
-        
-        struct Cell {
-            static let instance = MultiLineTextCell()
-        }
-        
-        let entryOptional = resultsController.sections![indexPath.section].objects![indexPath.row] as? LogEntry
-        guard let entry = entryOptional else {
-            return 0.0
-        }
-
-        Cell.instance.dateText = timeFormatter.stringFromDate(entry.timestamp)
-        Cell.instance.functionText = entry.function
-        Cell.instance.messageOneText = entry.message
-        
-        return Cell.instance.calculateHeight()
-    }
-    
 }
 
 
@@ -337,6 +322,8 @@ extension LogController {
         tableView.contentInset = UIEdgeInsetsZero
         tableView.separatorStyle = .None
         tableView.scrollsToTop = true
+        tableView.delegate = self
+        tableView.dataSource = self
         
         filterButton.translatesAutoresizingMaskIntoConstraints = false
         filterButton.backgroundColor = .blackColor()
@@ -344,6 +331,7 @@ extension LogController {
         filterButton.setTitle("⇡  Filter  ⇡", forState: .Normal)
         filterButton.setTitle("⇣  Filter  ⇣", forState: .Selected)
         
+        filterView.delegate = self
         filterView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(tableView)

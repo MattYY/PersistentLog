@@ -73,7 +73,6 @@ internal class MultiLineTextCell: UITableViewCell {
         view.backgroundColor = .whiteColor()
         view.textColor = .blackColor()
         view.font = .systemFontOfSize(12)
-        view.scrollEnabled = false
         view.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10)
         view.textContainer.lineBreakMode = .ByCharWrapping
         view.editable = false
@@ -260,32 +259,3 @@ extension MultiLineTextCell {
     }
 }
 
-
-extension MultiLineTextCell {
-
-    func calculateHeight() -> CGFloat {
-        let smallMargins = Constants.SmallMargin * 2
-        
-        let viewWidth = self.bounds.width - Constants.SmallMargin * 2
-        let dateLabelHeight = dateText.height(viewWidth: viewWidth, font: dateLabel.font)
-        let functionLabelHeight = functionText.height(viewWidth: viewWidth, font: functionLabel.font)
-        
-        var messageHeight = CGFloat(0.0)
-        if let messageOneFont = messageOneTextView.font {
-            messageHeight = messageOneTextView.text.height(viewWidth: viewWidth, font: messageOneFont) +
-                messageOneTextView.textContainerInset.top +
-                messageOneTextView.textContainerInset.bottom
-        }
-
-        let heights = [
-            smallMargins,
-            dateLabelHeight,
-            functionLabelHeight,
-            messageHeight,
-            2.0
-        ]
-        
-        return heights.reduce(0, combine: +)
-    }
-    
-}
