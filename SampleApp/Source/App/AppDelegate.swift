@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Log
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

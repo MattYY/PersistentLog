@@ -12,63 +12,111 @@ import CoreData
 
 
 ///
-public class Log {
+public class Logger {
     private static let DirectoryURLName = "Log"
     private static let LogModelName = "LogModel"
-    private static let BundleId = "com.sonic.sonicdrivein.Log"
+    private static let BundleId = "com.Logger"
     private static let LogEntryEntityName = "LogEntry"
     
     private var minLogLevel: LogLevel = .Debug
     private var excludedFilters: [String] = []
-
-    
-    ///
-    public var echoToConsole: Bool = false
-    
-    ///
-    public var persistToStore: Bool = false
     
     //
-    private lazy var stack : CoreDataStack = {
-        let bundle = NSBundle(identifier: Log.BundleId)!
-        let url = NSFileManager.defaultManager().URLsForDirectory(
-            .ApplicationSupportDirectory, inDomains: .UserDomainMask).last!
-        
-        url.URLByAppendingPathComponent(Log.DirectoryURLName)
-        
-        var error: NSError?
-        if !url.checkResourceIsReachableAndReturnError(&error) {
-            try! NSFileManager.defaultManager().createDirectoryAtURL(
-                url, withIntermediateDirectories: true, attributes: nil)
-        }
-
-        return try! CoreDataStack(bundle: bundle, directoryURL: url, modelName: Log.LogModelName)
-    }()
-
-    //Hide the initializer to inforce the Singleton
-    public init() {}
+    private let stack : CoreDataStack
+    
+    /// Turn on/off logging to the console
+    public var echoToConsole: Bool = false
+    
+    /// Turn on/off logging to the persistent store
+    public var persistToStore: Bool = false
+    
+    
+    /// Use this initializer if you want to utilize the persistent storage capabilities.
+    ///
+    /// - parameter directoryURL: URL at which you would like to store the underlying database files.
+    ///
+    public init(directoryURL: NSURL) {
+         let bundle = NSBundle(identifier: Logger.BundleId)!
+        stack = try! CoreDataStack(bundle: bundle, directoryURL: directoryURL, modelName: Logger.LogModelName)
+    }
 }
 
 
 
 /// Logging accessors
-extension Log {
+extension Logger {
     
+    /// Interface for logging `debug` level messages
+    ///
+    /// parameter msg - the message which to log
+    ///
+    /// parameter filter - A string that can be used to sort/fetch stored log entries
+    ///
+    /// parameter file - A value representing the file name that generated the log message.
+    ///                  Always use the default value.
+    ///
+    /// parameter function - A value representing the function name that called the log
+    ///                      function.  Always use the default value.
+    ///
+    /// parameter line - A value representing the line number of the function in the file in
+    ///                  which the log message was generated.  Always use the default value.
     ///
     public func debug(msg: String, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
         addEntry(msg, level: .Debug, filter: filter, file:file, function:function, line:line)
     }
     
+    /// Interface for logging `info` level messages
+    ///
+    /// parameter msg - the message which to log
+    ///
+    /// parameter filter - A string that can be used to sort/fetch stored log entries
+    ///
+    /// parameter file - A value representing the file name that generated the log message.
+    ///                  Always use the default value.
+    ///
+    /// parameter function - A value representing the function name that called the log
+    ///                      function.  Always use the default value.
+    ///
+    /// parameter line - A value representing the line number of the function in the file in
+    ///                  which the log message was generated.  Always use the default value.
     ///
     public func info(msg: String, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
         addEntry(msg, level: .Info, filter: filter, file:file, function:function, line:line)
     }
     
+    /// Interface for logging `warn` level messages
+    ///
+    /// parameter msg - the message which to log
+    ///
+    /// parameter filter - A string that can be used to sort/fetch stored log entries
+    ///
+    /// parameter file - A value representing the file name that generated the log message.
+    ///                  Always use the default value.
+    ///
+    /// parameter function - A value representing the function name that called the log
+    ///                      function.  Always use the default value.
+    ///
+    /// parameter line - A value representing the line number of the function in the file in
+    ///                  which the log message was generated.  Always use the default value.
     ///
     public func warn(msg: String, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
         addEntry(msg, level: .Warn, filter: filter, file:file, function:function, line:line)
     }
 
+    /// Interface for logging `error` level messages
+    ///
+    /// parameter msg - the message which to log
+    ///
+    /// parameter filter - A string that can be used to sort/fetch stored log entries
+    ///
+    /// parameter file - A value representing the file name that generated the log message.
+    ///                  Always use the default value.
+    ///
+    /// parameter function - A value representing the function name that called the log
+    ///                      function.  Always use the default value.
+    ///
+    /// parameter line - A value representing the line number of the function in the file in
+    ///                  which the log message was generated.  Always use the default value.
     ///
     public func error(msg: String, filter: String? = nil, file: String = #file, function: String = #function, line: Int32 = #line) {
         addEntry(msg, level: .Error, filter: filter, file:file, function:function, line:line)
@@ -81,7 +129,7 @@ extension Log {
             return
         }
         
-        if level.rawValue < self.minLogLevel.rawValue {
+        if level.rawValue <= self.minLogLevel.rawValue {
             return
         }
         
@@ -101,7 +149,7 @@ extension Log {
             let context = stack.concurrentContext()
             context.performBlock() {
                 let entry = NSEntityDescription.insertNewObjectForEntityForName(
-                    Log.LogEntryEntityName, inManagedObjectContext: context) as! LogEntry
+                    Logger.LogEntryEntityName, inManagedObjectContext: context) as! LogEntry
                 
                 entry.level = level
                 entry.filter = filter
@@ -121,41 +169,48 @@ extension Log {
 
 
 /// Storage accessors
-extension Log {
+extension Logger {
 
-    ///
+    /// The underlying Core Data context that operates on the main queue.
     public var mainContext: NSManagedObjectContext {
         return stack.mainContext
     }
     
-    ///
+    /// A disposable, concurrent, Core Data context.
     public func concurrentContext() -> NSManagedObjectContext {
         return stack.concurrentContext()
     }
     
-    ///
+    /// Excluded filters will not be persistented or logged to console.
     public func setExcludedFilters(filters: [String]) {
         stack.mainContext.performBlock {
             self.excludedFilters = filters
         }
     }    
     
-    ///
+    /// Levels below the min log level will not be persisted or logged to console.
     public func setMinimumLogLevel(level: LogLevel) {
         stack.mainContext.performBlock {
             self.minLogLevel = level
         }
     }
     
-    ///
+    /// Returns a `NSFetchRequest` object that can be used to query for `LogEntry` items.
     public func fetchRequestForLogEntry() -> NSFetchRequest {
-        let request = NSFetchRequest(entityName: Log.LogEntryEntityName)
+        let request = NSFetchRequest(entityName: Logger.LogEntryEntityName)
         request.fetchBatchSize = 20
         return request
     }
 
+    /// Creates a `NSPredicate` object that can be used to adjust a `LogEntry` fetch.
     ///
-    public func predicateForLogEntry(filter: String? = nil, level: LogLevel? = nil, startDate: NSDate? = nil, endDate: NSDate? = nil) -> NSPredicate {
+    /// parameter filter - A string by which to filter fetched `LogEntry` items.
+    ///
+    /// parameter level - A `LogLevel` by which to filter fetched `LogEntry` items.
+    ///
+    /// returns: An `NSPredicate`
+    ///
+    public func predicateForLogEntry(filter: String? = nil, level: LogLevel? = nil) -> NSPredicate {
         var predicates: [NSPredicate] = []
         if let filter = filter {
             predicates.append(NSPredicate(format: "filter == %@", filter))
@@ -168,23 +223,40 @@ extension Log {
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
     
+    /// Creates an array of `NSSortDescriptor` objects that can be used to adjust a `LogEntry` fetch.
+    ///
+    /// parameter ascending - A Bool that can be used to specify whether to return values in
+    ///                       time-ascending or time-descending order.
+    ///
+    /// returns: An array of `NSSortDescriptor`s
     ///
     public func sortDescriptorsForLogEntry(timeAscending ascending: Bool) -> [NSSortDescriptor] {
         return [NSSortDescriptor(key: "timestamp", ascending: ascending)]
     }
     
+    /// Delete `LogEntry`s at the specified filter and level. If no filter and level values are
+    /// specified all entries will be deleted.
     ///
-    public func deleteLogEntries(filter: String? = nil, level: LogLevel? = nil, completion: ((error: ErrorType?) -> Void)? = nil) {
+    /// parameter filter - Limits the deletion to only objects with the specified filter value.
+    ///
+    /// parameter level - Limits the deletion to only objects with the specified level value.
+    ///
+    /// parameter completion - An optional completion handler that returns an error if one
+    ///                        is encountered during deletion.
+    ///
+    public func deleteLogEntries(
+        context: NSManagedObjectContext? = nil, filter: String? = nil,
+        level: LogLevel? = nil, completion: ((error: ErrorType?) -> Void)? = nil) {
         
-        let context = stack.concurrentContext()
-        context.performBlock {
+        let context = context == nil ? stack.mainContext : context
+        context?.performBlock {
             let request = self.fetchRequestForLogEntry()
             request.predicate = self.predicateForLogEntry(filter, level: level)
             
             do {
-                let results = try context.executeFetchRequest(request) as? [LogEntry] ?? []
+                let results = try context?.executeFetchRequest(request) as? [LogEntry] ?? []
                 for result in results {
-                    context.deleteObject(result)
+                    context?.deleteObject(result)
                 }
                 
                 self.stack.saveToDisk(context, completion: completion)

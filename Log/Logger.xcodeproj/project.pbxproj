@@ -13,7 +13,7 @@
 		F47E4D811CEA1F0E00A8D6A0 /* LogModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D791CEA1F0E00A8D6A0 /* LogModel.xcdatamodeld */; };
 		F47E4D821CEA1F0E00A8D6A0 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E4D7C1CEA1F0E00A8D6A0 /* Log.swift */; };
 		F48A6B711CED183B0002A100 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48A6B701CED183B0002A100 /* LogLevel.swift */; };
-		F4A530081CE9FB9200800562 /* Log.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A52FFD1CE9FB9100800562 /* Log.framework */; };
+		F4A530081CE9FB9200800562 /* Logger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A52FFD1CE9FB9100800562 /* Logger.framework */; };
 		F4A5301B1CE9FC1000800562 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = F4A530191CE9FC1000800562 /* Log.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -34,8 +34,8 @@
 		F47E4D7A1CEA1F0E00A8D6A0 /* LogModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LogModel.xcdatamodel; sourceTree = "<group>"; };
 		F47E4D7C1CEA1F0E00A8D6A0 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		F48A6B701CED183B0002A100 /* LogLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
-		F4A52FFD1CE9FB9100800562 /* Log.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Log.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F4A530071CE9FB9200800562 /* LogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4A52FFD1CE9FB9100800562 /* Logger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Logger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4A530071CE9FB9200800562 /* Logger.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Logger.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4A530181CE9FC1000800562 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		F4A530191CE9FC1000800562 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Log.h; path = Resources/Log.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4A530081CE9FB9200800562 /* Log.framework in Frameworks */,
+				F4A530081CE9FB9200800562 /* Logger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,8 +101,8 @@
 		F4A52FFE1CE9FB9100800562 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F4A52FFD1CE9FB9100800562 /* Log.framework */,
-				F4A530071CE9FB9200800562 /* LogTests.xctest */,
+				F4A52FFD1CE9FB9100800562 /* Logger.framework */,
+				F4A530071CE9FB9200800562 /* Logger.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,9 +140,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		F4A52FFC1CE9FB9100800562 /* Log */ = {
+		F4A52FFC1CE9FB9100800562 /* Logger */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F4A530111CE9FB9200800562 /* Build configuration list for PBXNativeTarget "Log" */;
+			buildConfigurationList = F4A530111CE9FB9200800562 /* Build configuration list for PBXNativeTarget "Logger" */;
 			buildPhases = (
 				F4A52FF81CE9FB9100800562 /* Sources */,
 				F4A52FF91CE9FB9100800562 /* Frameworks */,
@@ -153,14 +153,14 @@
 			);
 			dependencies = (
 			);
-			name = Log;
+			name = Logger;
 			productName = Log;
-			productReference = F4A52FFD1CE9FB9100800562 /* Log.framework */;
+			productReference = F4A52FFD1CE9FB9100800562 /* Logger.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		F4A530061CE9FB9200800562 /* LogTests */ = {
+		F4A530061CE9FB9200800562 /* LoggerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F4A530141CE9FB9200800562 /* Build configuration list for PBXNativeTarget "LogTests" */;
+			buildConfigurationList = F4A530141CE9FB9200800562 /* Build configuration list for PBXNativeTarget "LoggerTests" */;
 			buildPhases = (
 				F4A530031CE9FB9200800562 /* Sources */,
 				F4A530041CE9FB9200800562 /* Frameworks */,
@@ -171,9 +171,9 @@
 			dependencies = (
 				F4A5300A1CE9FB9200800562 /* PBXTargetDependency */,
 			);
-			name = LogTests;
+			name = LoggerTests;
 			productName = LogTests;
-			productReference = F4A530071CE9FB9200800562 /* LogTests.xctest */;
+			productReference = F4A530071CE9FB9200800562 /* Logger.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -194,7 +194,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F4A52FF71CE9FB9100800562 /* Build configuration list for PBXProject "Log" */;
+			buildConfigurationList = F4A52FF71CE9FB9100800562 /* Build configuration list for PBXProject "Logger" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -206,8 +206,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F4A52FFC1CE9FB9100800562 /* Log */,
-				F4A530061CE9FB9200800562 /* LogTests */,
+				F4A52FFC1CE9FB9100800562 /* Logger */,
+				F4A530061CE9FB9200800562 /* LoggerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -255,7 +255,7 @@
 /* Begin PBXTargetDependency section */
 		F4A5300A1CE9FB9200800562 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F4A52FFC1CE9FB9100800562 /* Log */;
+			target = F4A52FFC1CE9FB9100800562 /* Logger */;
 			targetProxy = F4A530091CE9FB9200800562 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -362,10 +362,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonic.sonicdrivein.Log;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Logger;
+				PRODUCT_NAME = Logger;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -381,10 +381,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sonic.sonicdrivein.Log;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Logger;
+				PRODUCT_NAME = Logger;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -395,7 +395,7 @@
 				INFOPLIST_FILE = LogTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sonic.sonic-drive-in.LogTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Logger;
 			};
 			name = Debug;
 		};
@@ -405,14 +405,14 @@
 				INFOPLIST_FILE = LogTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sonic.sonic-drive-in.LogTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Logger;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F4A52FF71CE9FB9100800562 /* Build configuration list for PBXProject "Log" */ = {
+		F4A52FF71CE9FB9100800562 /* Build configuration list for PBXProject "Logger" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F4A5300F1CE9FB9200800562 /* Debug */,
@@ -421,7 +421,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F4A530111CE9FB9200800562 /* Build configuration list for PBXNativeTarget "Log" */ = {
+		F4A530111CE9FB9200800562 /* Build configuration list for PBXNativeTarget "Logger" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F4A530121CE9FB9200800562 /* Debug */,
@@ -430,7 +430,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F4A530141CE9FB9200800562 /* Build configuration list for PBXNativeTarget "LogTests" */ = {
+		F4A530141CE9FB9200800562 /* Build configuration list for PBXNativeTarget "LoggerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F4A530151CE9FB9200800562 /* Debug */,

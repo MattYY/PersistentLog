@@ -3,12 +3,10 @@
 //  SampleApp
 //
 //  Created by Matthew Yannascoli on 5/17/16.
-//  Copyright © 2016 Fossil Group, Inc. All rights reserved.
 //
 
 import UIKit
-import Log
-
+import Logger
 
 protocol FilterViewDelegate: class {
     func filterViewDidUpdateLevel(level: LogLevel)

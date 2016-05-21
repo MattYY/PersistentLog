@@ -3,7 +3,6 @@
 //  SampleApp
 //
 //  Created by Matthew Yannascoli on 5/19/16.
-//  Copyright © 2016 Fossil Group, Inc. All rights reserved.
 //
 
 import UIKit

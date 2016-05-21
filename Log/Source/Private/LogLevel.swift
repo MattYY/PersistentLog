@@ -3,7 +3,6 @@
 //  Log
 //
 //  Created by Matthew Yannascoli on 5/18/16.
-//  Copyright © 2016 America's Drive-In Brand Properties LLC. All rights reserved.
 //
 
 import Foundation

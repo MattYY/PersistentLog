@@ -3,14 +3,22 @@
 //  SampleApp
 //
 //  Created by Matthew Yannascoli on 5/16/16.
-//  Copyright © 2016 Fossil Group, Inc. All rights reserved.
 //
 
-import Log
+import Foundation
+import Logger
 
 
-/// Singleton
-let log = Log()
+/// Logger
+let log: Logger = {
+    let url = NSFileManager.defaultManager().URLsForDirectory(
+        .ApplicationSupportDirectory, inDomains: .UserDomainMask).last!
+    url.URLByAppendingPathComponent("Log")
+    
+    return Logger(directoryURL: url)
+}()
+
+
 
 
 var USING_SIMULATOR : Bool {

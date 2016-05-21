@@ -1,22 +1,3 @@
-// Copyright (c) 2016 Matthew Yannascoli
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
 
 
 import UIKit
@@ -90,7 +71,6 @@ class CoreDataStack {
         return true
     }
     
-    let log = Log()
     private let storeType: String
     private let storeOptions: [String: Bool]
     
@@ -166,7 +146,7 @@ class CoreDataStack {
         //Model
         let modelURL = bundle.URLForResource(modelName, withExtension: "momd")
         guard let mURL = modelURL else {
-            log.error("Unabled able to find object model file with name: \(modelName)")
+            debugPrint("Unabled able to find object model file with name: \(modelName)")
             throw CoreDataStackError.InvalidModelPath(path: modelURL)
         }
         managedObjectModel = NSManagedObjectModel(contentsOfURL: mURL)!
@@ -186,7 +166,7 @@ class CoreDataStack {
             let message = "Attempt to add `persistentStoreCoordinator` failed with error: " +
                 "\(error.localizedDescription). Removing store files..."
             
-            log.error(message)
+            debugPrint(message)
             try removeDBFiles()
             throw error
         }
@@ -227,7 +207,7 @@ extension CoreDataStack {
     ///                         Dispatch occurs on the main queue.
     func saveToDisk(context: NSManagedObjectContext? = nil, completion: ((error: ErrorType?) -> Void)? = nil) {
         guard deletedStore else {
-            log.error(CoreDataStackError.DeletedStore.debugDescription)
+            debugPrint(CoreDataStackError.DeletedStore.debugDescription)
             completion?(error: CoreDataStackError.DeletedStore)
             return
         }
@@ -239,7 +219,7 @@ extension CoreDataStack {
                     saveCompletion?()
                 }
                 catch let error as NSError {
-                    self.log.error("Context (\(context)) save failed with error: \(error.localizedDescription)")
+                    debugPrint("Context (\(context)) save failed with error: \(error.localizedDescription)")
                     self.onMain(withError: error, call: completion)
                 }
             }
@@ -340,19 +320,19 @@ private extension CoreDataStack {
                             try fileManager.removeItemAtURL(url)
                         }
                         catch let error as NSError {
-                            log.error("Unable to remove sqlite file with error: \(error.localizedDescription)")
+                            debugPrint("Unable to remove sqlite file with error: \(error.localizedDescription)")
                             throw error
                         }
                     }
                 }
                 catch let error as NSError {
-                    log.error("Unable to fetch contents of container directory with error: \(error.localizedDescription)")
+                    debugPrint("Unable to fetch contents of container directory with error: \(error.localizedDescription)")
                     throw error
                 }
                 
             }
             catch let error as NSError {
-                log.error("Unable to remove the persistent store with error: \(error.localizedDescription)")
+                debugPrint("Unable to remove the persistent store with error: \(error.localizedDescription)")
                 throw error
             }
         }

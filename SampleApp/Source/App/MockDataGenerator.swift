@@ -3,7 +3,6 @@
 //  SampleApp
 //
 //  Created by Matthew Yannascoli on 5/18/16.
-//  Copyright © 2016 Fossil Group, Inc. All rights reserved.
 //
 
 import Foundation

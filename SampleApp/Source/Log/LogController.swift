@@ -8,8 +8,7 @@
 
 import UIKit
 import CoreData
-import Log
-
+import Logger
 
 class LogController: UIViewController {
     private struct Constants {
@@ -30,8 +29,8 @@ class LogController: UIViewController {
         return tableView.contentOffset.y == -64
     }
     private var indexPathsToInsert: NSMutableSet = []
-    
-    
+
+ 
     private var timeFormatter: NSDateFormatter = {
         let formatter = NSDateFormatter()
         formatter.dateStyle = .ShortStyle
@@ -111,7 +110,7 @@ class LogController: UIViewController {
 }
 
 
-// MARK: - NSFetchedResultsControllerDelegate -
+//MARK: - NSFetchedResultsControllerDelegate -
 extension LogController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         if isScrolledToTop {
@@ -268,7 +267,9 @@ extension LogController: UIActionSheetDelegate {
     
     
     func clear() {
-        log.deleteLogEntries() { (error) in
+        //delete on a concurrent context
+        let context = log.concurrentContext()
+        log.deleteLogEntries(context) { (error) in
             dispatch_async(dispatch_get_main_queue()) {
                 self.tableView.reloadData()
             }
@@ -305,10 +306,10 @@ extension LogController: UIActionSheetDelegate {
             do {
                 let results = try context.executeFetchRequest(request) as? [LogEntry] ?? []
                 for result in results {
-                    let str = "+++++=\n" +
+                    let str = "++++++++++++++++++++++++++\n" +
                         "\(self!.timeFormatter.stringFromDate(result.timestamp) + ":")\n" +
                         "Line: \(result.line), Func: \(result.function)\n" +
-                        "\(result.message)\n +++++\n\n"
+                        "\(result.message)\n ++++++++++++++++++++++++++\n\n"
                     
                     buffer.appendString(str)
                 }
