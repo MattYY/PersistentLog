@@ -16,6 +16,8 @@ class LogController: UIViewController {
         static let WarningColor = UIColor(red: 1.0, green: 0.4, blue: 0.1, alpha: 1.0)
         static let InfoColor = UIColor(red: 1.0, green: 0.9, blue: 0.0, alpha: 1.0)
         static let DebugColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)
+        static let BackgroundColor = UIColor(red: 0.92, green: 0.92, blue: 0.92, alpha: 1.0)
+        static let CellHeight: CGFloat = 200.0
     }
     
     private let filters: [String]
@@ -116,7 +118,7 @@ extension LogController: NSFetchedResultsControllerDelegate {
             if let newIndexPath = newIndexPath {
                 if !isScrolledToTop {
                     tableView.reloadData()
-                    tableView.contentOffset.y += heightForCellAtIndexPath(newIndexPath)
+                    tableView.contentOffset.y += Constants.CellHeight
                 }
                 else {
                     tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .None)
@@ -154,7 +156,7 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 200
+        return Constants.CellHeight
     }
     
     
@@ -162,7 +164,6 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
         if let sections = resultsController?.sections {
             return sections[0].numberOfObjects
         }
-        
         return 0
     }
 
@@ -202,14 +203,16 @@ extension LogController: UITableViewDelegate, UITableViewDataSource {
 extension LogController: UIActionSheetDelegate {
     
     func bindActions() {
-        
         let share = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(showActionSheet));
         let refresh = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: #selector(refreshData));
         navigationItem.setRightBarButtonItems([share, refresh], animated: false)
         
         filterButton.addTarget(self, action: #selector(toggleFilterPicker), forControlEvents: .TouchDown)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeFilterPicker))
+        tableView.addGestureRecognizer(tap)
     }
+    
     
     func showActionSheet() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -235,15 +238,14 @@ extension LogController: UIActionSheetDelegate {
         self.presentViewController(alertController, animated: true, completion: nil)
     }
 
+    
     func refreshData() {
-        
         //only reload if there are items in the table
         guard let sections = resultsController?.sections
             where sections[0].numberOfObjects > 0 else {
             
             return
         }
-        
         
         let top = NSIndexPath(forRow: 0, inSection: 0)
         tableView.scrollToRowAtIndexPath(top, atScrollPosition: .Top, animated: true)
@@ -309,13 +311,12 @@ extension LogController: UIActionSheetDelegate {
 }
 
 
-
-
-
 // MARK: - Layout -
 extension LogController {
     
     private func layout() {
+        tableView.backgroundColor = Constants.BackgroundColor
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.registerClass(MultiLineTextCell.self, forCellReuseIdentifier: MultiLineTextCell.Constants.ReuseIdentifier)
         tableView.allowsSelection = false
@@ -400,32 +401,43 @@ extension LogController {
         view.addConstraint(filterPickerTopConstraint!)
         
     }
+    
+    func closeFilterPicker() {
+        guard let constraint = filterPickerTopConstraint else {
+            return
+        }
+        
+        if constraint.constant == 0 {
+            return
+        }
+        
+        toggleFilterPicker()
+    }
 
     func toggleFilterPicker() {
-        if let constraint = filterPickerTopConstraint {
-            
-            let expanding:Bool
-            if constraint.constant == 0 {
-                constraint.constant = -200
-                expanding = true
+        guard let constraint = filterPickerTopConstraint else {
+            return
+        }
+        
+        let expanding: Bool
+        if constraint.constant == 0 {
+            constraint.constant = -200
+            expanding = true
+        }
+        else {
+            constraint.constant = 0
+            expanding = false
+        }
+        
+        filterButton.selected = expanding
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            if expanding {
+                self.tableView.contentOffset = CGPointMake(0, self.tableView.contentOffset.y+200)
             }
             else {
-                constraint.constant = 0
-                expanding = false
+                self.tableView.contentOffset = CGPointMake(0, self.tableView.contentOffset.y-200)
             }
-            
-            filterButton.selected = expanding
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                
-                if expanding {
-                    self.tableView.contentOffset = CGPointMake(0, self.tableView.contentOffset.y+200)
-                }
-                else {
-                    self.tableView.contentOffset = CGPointMake(0, self.tableView.contentOffset.y-200)
-                }
-                self.view.layoutIfNeeded()
-            })
-        }
+            self.view.layoutIfNeeded()
+        })
     }
-    
 }
